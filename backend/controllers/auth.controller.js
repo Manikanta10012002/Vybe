@@ -28,7 +28,7 @@ export const signup = async (req, res) => {
     const token = await genToken(newUser._id);
 
 
-    res.cookie("token", token, { httpOnly: true,maxAge: 10*365*24*60*60*1000, secure: false, sameSite: "lax", domain: "localhost" });
+    res.cookie("token", token, { httpOnly: true,maxAge: 10*365*24*60*60*1000, secure: true, sameSite: "none" });
     const userObj = newUser.toObject();
     delete userObj.password;
     res.status(201).json({ message: "User created successfully", User: userObj, token });
@@ -55,7 +55,7 @@ export const signIn = async (req, res) => {
 
     const token =  genToken(user._id);
 
-    res.cookie("token", token, { httpOnly: true,maxAge: 10*365*24*60*60*1000, secure: false, sameSite: "lax", domain: "localhost" });
+    res.cookie("token", token, { httpOnly: true,maxAge: 10*365*24*60*60*1000, secure: true, sameSite: "none" });
     const userObj = user.toObject();
     delete userObj.password;
     res.status(200).json(userObj)
