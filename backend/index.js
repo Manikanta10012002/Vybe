@@ -12,6 +12,7 @@ import messageRouter from "./routes/message.routes.js";
 import { app, server } from "./socket.js";
 
 dotenv.config();
+console.log("MONGO_URL exists:", !!process.env.MONGO_URL);
 
 const PORT = process.env.PORT || 8000;
 
