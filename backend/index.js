@@ -29,11 +29,22 @@ const corsOptions = {
     "https://vybe-1-znuj.onrender.com"
   ],
   credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  methods: [
+    "GET",
+    "HEAD",
+    "PUT",
+    "PATCH",
+    "POST",
+    "DELETE"
+  ],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization"
+  ]
 };
 
 app.use(cors(corsOptions));
+
 
 app.use(express.json());
 app.use(cookieParser());
