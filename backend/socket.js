@@ -4,13 +4,23 @@ import { Server } from 'socket.io'
 const app = express()
 const server = http.createServer(app)
 
-const io = new Server(server,{
-    cors:{
-        origin:'https://vybe-1-znuj.onrender.com',
-        methods:['GET','POST']
-    }
-})
+// const io = new Server(server,{
+//     cors:{
+//         origin:'https://vybe-1-znuj.onrender.com',
+//         methods:['GET','POST']
+//     }
+// })
 
+const io = new Server(server, {
+  cors: {
+    origin: [
+      "http://localhost:5173",
+      "https://vybe-1-znuj.onrender.com"
+    ],
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
 const userSocketMap = {}
 
 export const getSocketId = (receiverId)=>{
@@ -33,3 +43,6 @@ io.on('connection',(Socket)=>{
 })
 
 export {app,io,server}
+
+
+

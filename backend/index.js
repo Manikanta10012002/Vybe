@@ -16,12 +16,25 @@ console.log("MONGO_URL exists:", !!process.env.MONGO_URL);
 
 const PORT = process.env.PORT || 8000;
 
-app.use(cors({
-  origin: ["http://localhost:5173",
+// app.use(cors({
+//   origin: ["http://localhost:5173",
+//     "https://vybe-1-znuj.onrender.com"
+//   ],
+//   credentials: true,
+// }));
+
+const corsOptions = {
+  origin: [
+    "http://localhost:5173",
     "https://vybe-1-znuj.onrender.com"
   ],
   credentials: true,
-}));
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
