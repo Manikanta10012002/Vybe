@@ -17,7 +17,11 @@ function Notifications() {
 
   const markAsRead = async ()=>{
     try {
-      const result = await axios.post(`${serverUrl}/api/user/markAsRead`,{notificationId:ids},{withCredentials:true})
+      const result = await axios.post(
+  `${serverUrl}/api/users/markAsRead`,
+  { notificationId: ids },
+  { withCredentials: true }
+)
        await fetchNotifications()
       
     } catch (error) {
@@ -27,7 +31,10 @@ function Notifications() {
   }
   const fetchNotifications = async () => {
                 try {
-                    const result = await axios.get(`${serverUrl}/api/user/getAllNotifications`, { withCredentials: true });
+                   const result = await axios.get(
+  `${serverUrl}/api/users/getAllNotifications`,
+  { withCredentials: true }
+);
                     dispatch(setNotificationData(result.data))
                 }
                 catch (error) {
