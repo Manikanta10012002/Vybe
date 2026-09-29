@@ -1,6 +1,7 @@
 import User from "../models/user.model.js"
 import uploadOnCloudinary from "../config/cloudinary.js"
 import Notification from "../models/notification.model.js";
+import { getSocketId, io } from "../socket.js";
 
 export const getCurrentUser = async (req, res) => {
   try {
@@ -125,7 +126,7 @@ export const follow = async (req,res)=>{
                 message:'started following you'
             })
             const populatedNotification = await Notification.findById(notification._id).populate('sender receiver')
-            const receiverSocketId = getSocketId(targetUser._id)
+            const receiverSocketId = getSocketId(targetUser._id.toString())
             if(receiverSocketId){
                 io.to(receiverSocketId).emit('newNotification',populatedNotification)
             }
