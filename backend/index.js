@@ -37,17 +37,18 @@ const corsOptions = {
   origin: function (origin, callback) {
     console.log("CORS Origin:", origin);
 
-    // Allow requests with no origin
-    // Example: Postman, server-to-server requests
+    // Allow requests without an origin
     if (!origin) {
       return callback(null, true);
     }
 
+    // Allow localhost and deployed frontend
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
     console.log("❌ CORS blocked:", origin);
+
     return callback(new Error(`CORS blocked: ${origin}`));
   },
 
@@ -69,14 +70,11 @@ const corsOptions = {
   ]
 };
 
-// Apply CORS before routes
+// Apply CORS middleware
 app.use(cors(corsOptions));
 
-// Handle browser preflight requests
-app.options("*", cors(corsOptions));
-
 // ===============================
-// MIDDLEWARE
+// BODY MIDDLEWARE
 // ===============================
 
 app.use(express.json());
@@ -88,7 +86,7 @@ app.use(express.urlencoded({
 }));
 
 // ===============================
-// TEST API
+// TEST CORS API
 // ===============================
 
 app.get("/api/test-cors", (req, res) => {
@@ -100,7 +98,7 @@ app.get("/api/test-cors", (req, res) => {
 });
 
 // ===============================
-// ROUTES
+// API ROUTES
 // ===============================
 
 app.use("/api/auth", authRouter);
@@ -124,8 +122,10 @@ server.listen(PORT, async () => {
     await connectDB();
 
     console.log(`✅ Server is running on port ${PORT}`);
+
     console.log("✅ Allowed CORS origins:");
     console.log(allowedOrigins);
+
   } catch (error) {
     console.error("❌ Database connection failed:", error);
   }
