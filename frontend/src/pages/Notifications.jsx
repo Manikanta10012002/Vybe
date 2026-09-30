@@ -15,20 +15,20 @@ function Notifications() {
   const ids = notificationData.map((n)=>n._id)
   const dispatch = useDispatch()
 
-  const markAsRead = async ()=>{
-    try {
-      const result = await axios.post(
-  `${serverUrl}/api/users/markAsRead`,
-  { notificationId: ids },
-  { withCredentials: true }
-)
-       await fetchNotifications()
-      
-    } catch (error) {
-      console.log(error)
-      
-    }
+ const markAsRead = async () => {
+  try {
+    if (ids.length === 0) return;
+
+    await axios.post(
+      `${serverUrl}/api/users/markAsRead`,
+      { notificationId: ids },
+      { withCredentials: true }
+    );
+
+  } catch (error) {
+    console.log(error);
   }
+};
   const fetchNotifications = async () => {
                 try {
                    const result = await axios.get(
